@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useMemo } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { MovieProvider, useMovieContext } from './context/MovieContext';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import MovieDetails from './pages/MovieDetails';
+import Favorites from './pages/Favorites';
+import Login from './pages/Login';
 
-function App() {
+function ThemedApp() {
+  const { darkMode } = useMovieContext();
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: darkMode ? 'dark' : 'light',
+          primary: {
+            main: '#1976d2',
+          },
+        },
+      }),
+    [darkMode]
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <MovieProvider>
+      <ThemedApp />
+    </MovieProvider>
+  );
+}
