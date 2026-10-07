@@ -5,7 +5,7 @@ A modern, responsive web application built with React and Material-UI (MUI) that
 
 ## 🚀 Live Demo
 
-- [Live Demo Link](INSERT_DEPLOYED_URL_HERE)
+- [Live Demo Link](https://movie-explorer-phi-peach.vercel.app)
 
 ## ✨ Features Implemented
 
